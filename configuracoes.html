@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configurações - Painel de Controle</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="configuracoes.css">
+</head>
+<body>
+
+    <div class="config-container">
+        <h2>⚙️ Configurações</h2>
+        <p class="config-intro">Gerencie a identidade visual, o conteúdo editorial e sua conta.</p>
+
+        <section class="config-section">
+            <h3>1. Textos do Site</h3>
+            <div class="form-group">
+                <label>Título do Hero</label>
+                <textarea id="edit-hero-titulo" rows="2"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Subtítulo do Hero</label>
+                <textarea id="edit-hero-subtitulo" rows="3"></textarea>
+            </div>
+            <button class="btn-primary rose btn-block" onclick="salvarTextos()">Salvar Textos</button>
+        </section>
+
+        <hr class="config-divider">
+
+        <section class="config-section">
+            <h3>2. Capa do Livro em Destaque</h3>
+            <div class="form-group">
+                <label>Alterar Foto do Livro Atual (Hero)</label>
+                <input type="file" accept="image/*" onchange="previewImagem(this, 'book-preview')">
+                <div class="preview-container">
+                    <img id="book-preview" class="preview-box-large">
+                </div>
+            </div>
+            <button class="btn-primary rose btn-block" onclick="salvarFotoLivro()">Atualizar Capa</button>
+        </section>
+
+        <hr class="config-divider">
+
+        <section class="config-section">
+            <h3>3. Nossa Biblioteca (Volumes)</h3>
+            <div class="form-group">
+                <label>Título da Edição</label>
+                <input type="text" id="vol-titulo" placeholder="Ex: Mulheres em Movimento Vol. 2">
+            </div>
+            <div class="form-group">
+                <label>Status</label>
+                <select id="vol-status">
+                    <option value="lancado">Lançado</option>
+                    <option value="breve">Em Breve / Inscrições Abertas</option>
+                </select>
+            </div>
+            <button class="btn-primary gold btn-block" onclick="salvarEdicao()">Adicionar à Biblioteca</button>
+        </section>
+
+        <hr class="config-divider">
+
+        <section class="config-section">
+            <h3>4. Adicionar Mulher na Comunidade</h3>
+            <div class="form-group">
+                <label>Nome da Participante</label>
+                <input type="text" id="new-name">
+            </div>
+            <div class="form-group">
+                <label>Função / Edição</label>
+                <input type="text" id="new-role" placeholder="Ex: Coautora Vol. 1">
+            </div>
+            <div class="form-group">
+                <label>Foto de Perfil</label>
+                <input type="file" accept="image/*" onchange="previewImagem(this, 'member-preview')">
+                <img id="member-preview" class="preview-box">
+            </div>
+            <button class="btn-primary gold btn-block" onclick="salvarNovoMembro()">Publicar na Comunidade</button>
+        </section>
+
+        <hr class="config-divider">
+
+        <section class="config-section account-box">
+            <h3>5. Segurança da Conta</h3>
+            <div class="form-group">
+                <label>E-mail de Acesso</label>
+                <input type="email" id="acc-email" value="dona@movimento.com">
+            </div>
+            <div class="form-group">
+                <label>Nova Senha</label>
+                <input type="password" id="acc-password" placeholder="••••••••">
+            </div>
+            <button class="btn-primary rose btn-block" onclick="salvarConta()">Atualizar Dados de Acesso</button>
+        </section>
+
+        <hr class="config-divider">
+        <a href="index.html" class="btn-secondary btn-block back-btn">Sair e Voltar para o Site</a>
+    </div>
+
+    <script>
+        let tempImg = "";
+
+        window.onload = function() {
+            // Carregar textos salvos
+            document.getElementById('edit-hero-titulo').value = localStorage.getItem('hero-titulo') || "";
+            document.getElementById('edit-hero-subtitulo').value = localStorage.getItem('hero-subtitulo') || "";
+            
+            // Carregar preview da foto do livro se existir
+            const savedBook = localStorage.getItem('capa-livro');
+            if(savedBook) {
+                const img = document.getElementById('book-preview');
+                img.src = savedBook;
+                img.style.display = 'block';
+            }
+        }
+
+        // Função Genérica para Preview
+        function previewImagem(input, idDestino) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    tempImg = e.target.result;
+                    const img = document.getElementById(idDestino);
+                    img.src = tempImg;
+                    img.style.display = 'block';
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function salvarTextos() {
+            localStorage.setItem('hero-titulo', document.getElementById('edit-hero-titulo').value);
+            localStorage.setItem('hero-subtitulo', document.getElementById('edit-hero-subtitulo').value);
+            alert("Textos salvos!");
+        }
+
+        function salvarFotoLivro() {
+            if(tempImg) {
+                localStorage.setItem('capa-livro', tempImg);
+                alert("Capa do livro atualizada!");
+            }
+        }
+
+        function salvarEdicao() {
+            const edicoes = JSON.parse(localStorage.getItem('edicoes-livros')) || [];
+            edicoes.push({
+                titulo: document.getElementById('vol-titulo').value,
+                status: document.getElementById('vol-status').value
+            });
+            localStorage.setItem('edicoes-livros', JSON.stringify(edicoes));
+            alert("Nova edição adicionada!");
+        }
+
+        function salvarNovoMembro() {
+            const lista = JSON.parse(localStorage.getItem('mulheres-comunidade')) || [];
+            lista.push({
+                nome: document.getElementById('new-name').value,
+                papel: document.getElementById('new-role').value,
+                foto: tempImg || "placeholder.jpg"
+            });
+            localStorage.setItem('mulheres-comunidade', JSON.stringify(lista));
+            alert("Membro adicionado!");
+        }
+
+        function salvarConta() {
+            localStorage.setItem('admin-email', document.getElementById('acc-email').value);
+            const pass = document.getElementById('acc-password').value;
+            if(pass) localStorage.setItem('admin-pass', pass);
+            alert("Dados de conta atualizados!");
+        }
+    </script>
+</body>
+</html>

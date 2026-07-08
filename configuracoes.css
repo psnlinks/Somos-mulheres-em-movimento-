@@ -1,0 +1,122 @@
+/* --- ESTILOS EXCLUSIVOS DA PÁGINA DE CONFIGURAÇÕES --- */
+
+.config-container { 
+    max-width: 650px; 
+    margin: 40px auto; 
+    padding: 40px; 
+    background: var(--branco); 
+    border-radius: 12px; 
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    border: 1px solid rgba(212, 138, 133, 0.1);
+}
+
+.config-container h2 {
+    font-family: var(--fonte-titulo);
+    color: var(--texto-escuro);
+    margin-bottom: 5px;
+    font-size: 2rem;
+}
+
+.config-intro {
+    color: var(--texto-suave); 
+    margin-bottom: 40px;
+    font-size: 1rem;
+}
+
+.config-section {
+    margin-bottom: 10px;
+}
+
+.config-container h3 {
+    font-family: var(--fonte-corpo);
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--rosa-escuro);
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.form-group { margin-bottom: 25px; }
+
+.form-group label { 
+    display: block; 
+    font-weight: 700; 
+    font-size: 0.85rem;
+    margin-bottom: 10px; 
+    color: var(--texto-escuro); 
+}
+
+.form-group input, 
+.form-group select,
+.form-group textarea { 
+    width: 100%; 
+    padding: 14px; 
+    border: 1px solid rgba(112, 95, 85, 0.15); 
+    border-radius: 8px; 
+    font-family: var(--fonte-corpo);
+    color: var(--texto-escuro);
+    background-color: #fafafa;
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus, 
+.form-group textarea:focus {
+    border-color: var(--rosa-escuro);
+    background-color: var(--branco);
+    outline: none;
+}
+
+/* Previews */
+.preview-container {
+    margin-top: 15px;
+    background: var(--bg-creme);
+    padding: 15px;
+    border-radius: 8px;
+    display: inline-block;
+}
+
+.preview-box { 
+    max-width: 80px; 
+    height: 80px; 
+    object-fit: cover; 
+    border-radius: 50%; 
+    display: none; 
+}
+
+.preview-box-large {
+    max-width: 120px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 4px;
+    display: none;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.account-box {
+    background-color: #fdf2f1;
+    padding: 25px;
+    border-radius: 10px;
+    border: 1px solid var(--rosa-claro);
+}
+
+.btn-block { 
+    width: 100%; 
+    margin-top: 5px; 
+    border: none;
+    cursor: pointer;
+    padding: 15px;
+    font-size: 1rem;
+}
+
+.back-btn {
+    display: block; 
+    text-align: center;
+    background-color: var(--bg-creme);
+}
+
+.config-divider { 
+    margin: 40px 0; 
+    border: 0; 
+    border-top: 1px solid rgba(212, 138, 133, 0.2); 
+}
