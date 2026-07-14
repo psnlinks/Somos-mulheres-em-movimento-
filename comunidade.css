@@ -16,15 +16,6 @@
     --dourado: #c9934e;
 }
 
-/* --- SEU CÓDIGO ORIGINAL CONTINUA ABAIXO --- */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-
-
 
 * {
     margin: 0;
@@ -122,21 +113,21 @@ body {
 /* Grid de Cards Detalhados */
 .members-large-grid {
     display: grid;
-    grid-template-columns: 1fr; /* Um abaixo do outro para dar espaço às bios */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Um abaixo do outro para dar espaço às bios */
+    align-items: stretch;
     gap: 30px;
 }
 
 .member-card-full {
-    min-height: 240px;
-    align-items: stretch;
-    display: grid;
-    grid-template-columns: 240px 1fr;
+    display: flex;
+    flex-direction: column;
     background-color: var(--branco);
     border-radius: 12px;
     overflow: hidden;
     border: 1px solid rgba(212, 138, 133, 0.15);
     box-shadow: 0 4px 15px rgba(0,0,0,0.01);
-    transition: transform 0.3s;
+    transition: transform 0.3s, box-shadow 0.3s;
+    height: 100%;
 }
 
 .member-card-full:hover {
@@ -153,17 +144,17 @@ body {
     min-height: 250px; /* Força a foto a ter no MÍNIMO essa altura */
     height: 100%; 
     position: relative;
+    height: 260px; /* Altura fixa ideal para a foto no topo do card */
+    flex-shrink: 0;
 }
 
 .member-photo img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* ISSO AQUI FAZ A MÁGICA: preenche o espaço e corta as sobras sozinha, sem distorcer o rosto */
+    object-fit: cover; /* preenche o espaço e corta as sobras sozinha, sem distorcer o rosto */
     object-position: center; /* Foca no centro da imagem */
     display: block;
 }
-
-
 
 
 
@@ -180,9 +171,10 @@ body {
 }
 
 .member-details {
-    padding: 30px;
+    padding: 25px;
     display: flex;
     flex-direction: column;
+    flex-grow: 1;
     justify-content: space-between;
 }
 
@@ -246,6 +238,14 @@ body {
     color: var(--rosa-escuro);
     font-weight: 600;
 }
+
+
+footer.footer{
+    grid-column: 1/-1;
+    width: 100%;
+    margin-top: 50px;
+}
+
 
 /* ==========================================================
    RESPONSIVIDADE DA COMUNIDADE

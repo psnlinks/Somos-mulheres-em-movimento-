@@ -49,19 +49,17 @@ a {
 
 .btn-primary.rose { 
     background-color: var(--rosa-escuro);
-    margin
 }
 .btn-primary.rose:hover { 
     background-color: #be7570; 
 }
 
+
 .btn-primary.gold { 
     background-color: var(--dourado); 
     margin: 30px;
 }
-.btn-primary.gold:hover { 
-    background-color: ; 
-}
+
 
 .btn-secondary {
     display: inline-block;
@@ -414,6 +412,23 @@ a {
 .book-card-info h3 { font-size: 1.2rem; margin-bottom: 10px; }
 .book-card-info p { font-size: 0.9rem; color: var(--texto-suave); margin-bottom: 15px; }
 .btn-link { color: var(--rosa-escuro); font-weight: 600; font-size: 0.9rem; }
+
+.book-card-cover {
+    height: 350px;
+    background: #f8f5f2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.book-card-cover img {
+    height: 90%;
+    width: auto;
+    border-radius: 4px;
+    box-shadow: 0 10px 20px rgba(0,0,0,.15);
+}
+
+
 
 .badge-status {
     align-self: flex-start;

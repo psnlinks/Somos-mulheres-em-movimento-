@@ -1,173 +1,519 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Configurações - Painel de Controle</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="configuracoes.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Somos Mulheres em Movimento - Painel Administrativo</title>
+  
+  <!-- Fontes do Menu (Index) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+  
+  <!-- Fontes do Painel -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome para os ícones -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    /* ==========================================
+       VARIÁVEIS DE CORES (MESCLADAS INDEX + PAINEL)
+       ========================================== */
+    :root {
+      /* Cores e Fontes da Navbar (Do seu Index) */
+      --bg-creme: #fdfaf7;
+      --rosa-escuro: #d48a85;
+      --rosa-claro: #e2b2ae;
+      --dourado: #c9934e;
+      --texto-escuro: #4a3b32;
+      --texto-suave: #705f55;
+      --branco: #ffffff;
+      --fonte-titulo: 'DM Serif Display', serif;
+      --fonte-corpo: 'Manrope', sans-serif;
+
+      /* Cores e Variáveis do Painel */
+      --accent-rose: #d99a8c;
+      --accent-rose-light: #fbeee9;
+      --shadow-soft: 0 10px 30px rgba(217, 154, 140, 0.12);
+      --font-serif-painel: 'Playfair Display', Georgia, serif;
+      --font-sans-painel: 'Montserrat', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 100%;
+      overflow-x: hidden; /* Evita rolagem e zoom lateral */
+    }
+
+    body {
+      font-family: var(--font-sans-painel);
+      background-color: var(--bg-creme);
+      color: var(--texto-escuro);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+    }
+
+    /* Detalhes de folhas de fundo decorativas */
+    body::before, body::after {
+      content: "";
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      opacity: 0.15;
+      pointer-events: none;
+      background-size: contain;
+      background-repeat: no-repeat;
+      z-index: 0;
+    }
+    body::before {
+      top: 10%;
+      right: -50px;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23d99a8c"><path d="M17,8C8,10 5.9,16.17 3.82,21.34L5.71,22L7.58,17.26C13,16 18,11 17,8M12,2C10.5,4 8,8.5 8,12C10.11,8 13.5,5.5 16,3C14,2.5 13,2 12,2Z"/></svg>');
+    }
+    body::after {
+      bottom: 5%;
+      left: -50px;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23d99a8c"><path d="M17,8C8,10 5.9,16.17 3.82,21.34L5.71,22L7.58,17.26C13,16 18,11 17,8M12,2C10.5,4 8,8.5 8,12C10.11,8 13.5,5.5 16,3C14,2.5 13,2 12,2Z"/></svg>');
+      transform: scaleX(-1) rotate(45deg);
+    }
+
+    /* ==========================================
+       HEADER / NAVBAR (Exatamente igual ao Index)
+       ========================================== */
+    .navbar {
+        position: fixed; 
+        top: 0;
+        left: 0;
+        width: 100%; 
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 7%;
+        background-color: var(--branco);
+        border-bottom: 1px solid rgba(212, 138, 133, 0.1);
+        z-index: 1000; 
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03); 
+    }
+
+    .logo {
+        font-family: var(--fonte-titulo);
+        font-size: 1.1rem;
+        font-weight: bold;
+        color: var(--dourado);
+        line-height: 1.1;
+        letter-spacing: 1px;
+    }
+    
+    .logo span {
+        font-size: 0.8rem;
+        font-family: var(--fonte-corpo);
+        color: var(--texto-suave);
+    }
+
+    .nav-links {
+        display: flex;
+        align-items: center;
+    }
+
+    .nav-links a {
+        font-family: var(--fonte-corpo);
+        color: var(--texto-escuro);
+        margin: 0 15px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+    
+    .nav-links a:hover { 
+        color: var(--rosa-escuro); 
+    }
+
+    .menu-toggle, .hamburger, .nav-buttons-mobile {
+        display: none;
+    }
+
+    /* ==========================================
+       CONTEÚDO PRINCIPAL (PAINEL)
+       ========================================== */
+    main {
+      max-width: 1200px;
+      margin: 140px auto 40px auto; /* Margin-top para compensar a navbar fixa */
+      padding: 0 24px;
+      text-align: center;
+      z-index: 1;
+      flex-grow: 1;
+      width: 100%;
+    }
+
+    .panel-header {
+      margin-bottom: 50px;
+    }
+
+    .panel-header .icon-wrapper {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+      color: var(--accent-rose);
+    }
+    
+    .panel-header .icon-wrapper i { font-size: 1.5rem; }
+    .panel-header .decor { font-size: 0.8rem; opacity: 0.7; }
+
+    .panel-header h1 {
+      font-family: var(--font-serif-painel);
+      font-size: 2.8rem;
+      font-weight: 400;
+      color: var(--texto-escuro);
+      margin-bottom: 15px;
+    }
+
+    .panel-header .divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 15px;
+    }
+
+    .panel-header .divider::before,
+    .panel-header .divider::after {
+      content: "";
+      width: 50px;
+      height: 1px;
+      background-color: var(--accent-rose);
+      opacity: 0.5;
+    }
+
+    .panel-header .divider i {
+      color: var(--accent-rose);
+      font-size: 0.8rem;
+    }
+
+    .panel-header p {
+      font-size: 1rem;
+      color: var(--texto-suave);
+      font-weight: 400;
+    }
+
+    /* Grid de Cards */
+    .grid-container {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      align-items: center;
+      width: 100%;
+    }
+
+    .row-top {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      width: 100%;
+    }
+
+    /* CORREÇÃO DO ZOOM: Mudado de width: 66.6% para max-width dinâmico */
+    .row-bottom {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 30px;
+      width: 100%;
+      max-width: 780px; 
+    }
+
+    .card {
+      background-color: var(--branco);
+      border-radius: 16px;
+      padding: 40px 30px;
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border: 1px solid rgba(217, 154, 140, 0.1);
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(217, 154, 140, 0.2);
+    }
+
+    .card-icon-container {
+      background-color: var(--accent-rose-light);
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .card-icon-container i {
+      font-size: 1.8rem;
+      color: var(--accent-rose);
+    }
+
+    .card h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--texto-escuro);
+      margin-bottom: 12px;
+    }
+
+    .card p {
+      font-size: 0.9rem;
+      color: var(--texto-suave);
+      line-height: 1.5;
+      margin-bottom: 25px;
+      min-height: 45px;
+    }
+
+    .btn-access {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 30px;
+      border: 1px solid var(--accent-rose);
+      border-radius: 20px;
+      text-decoration: none;
+      color: var(--accent-rose);
+      font-size: 0.85rem;
+      font-weight: 500;
+      background-color: transparent;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .btn-access:hover {
+      background-color: var(--accent-rose);
+      color: var(--branco);
+    }
+
+    .btn-access i {
+      font-size: 0.8rem;
+      transition: transform 0.3s ease;
+    }
+
+    .btn-access:hover i {
+      transform: translateX(4px);
+    }
+
+    /* ==========================================
+       FOOTER
+       ========================================== */
+    footer {
+      background-color: #f6ebe6;
+      padding: 30px 20px;
+      text-align: center;
+      border-top: 1px solid rgba(217, 154, 140, 0.15);
+      z-index: 10;
+      width: 100%;
+    }
+
+    footer p {
+      font-family: var(--font-serif-painel);
+      font-style: italic;
+      color: var(--texto-suave);
+      font-size: 1.05rem;
+      margin-bottom: 8px;
+    }
+
+    footer .heart-icon {
+      color: var(--accent-rose);
+      font-size: 0.8rem;
+    }
+
+    /* ==========================================
+       RESPONSIVIDADE (MEDIA QUERIES DO INDEX + PAINEL)
+       ========================================== */
+    @media (max-width: 1024px) {
+        .navbar { padding: 20px 4%; }
+        .nav-links a { margin: 0 8px; font-size: 0.85rem; }
+    }
+
+    @media (max-width: 992px) {
+      .row-top { grid-template-columns: repeat(2, 1fr); }
+      .row-bottom { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 768px) {
+        /* Menu Mobile - Hamburger */
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 24px;
+            height: 18px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+        
+        .hamburger span {
+            display: block;
+            height: 2px;
+            width: 100%;
+            background-color: var(--texto-escuro);
+            transition: all 0.3s ease;
+        }
+
+        .nav-links {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 70%;
+            height: 100vh;
+            background-color: var(--branco);
+            box-shadow: -5px 0 15px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            transition: right 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .nav-links a { 
+            font-size: 1.1rem; 
+            margin: 10px 0;
+        }
+
+        .menu-toggle:checked ~ .nav-links { right: 0; }
+        .menu-toggle:checked ~ .hamburger span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+        .menu-toggle:checked ~ .hamburger span:nth-child(2) { opacity: 0; }
+        .menu-toggle:checked ~ .hamburger span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+        /* Ajustes Painel Mobile */
+        .panel-header h1 { font-size: 2.2rem; }
+        .row-top, .row-bottom { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
 
-    <div class="config-container">
-        <h2>⚙️ Configurações</h2>
-        <p class="config-intro">Gerencie a identidade visual, o conteúdo editorial e sua conta.</p>
+  <!-- NAVBAR RESPONSIVA (Igual ao Index) -->
+  <header class="navbar">
+      <div class="logo">SOMOS MULHERES<br><span>EM MOVIMENTO</span></div>
+      
+      <!-- Botão Hambúrguer para Celular -->
+      <input type="checkbox" id="menu-toggle" class="menu-toggle">
+      <label for="menu-toggle" class="hamburger">
+          <span></span>
+          <span></span>
+          <span></span>
+      </label>
 
-        <section class="config-section">
-            <h3>1. Textos do Site</h3>
-            <div class="form-group">
-                <label>Título do Hero</label>
-                <textarea id="edit-hero-titulo" rows="2"></textarea>
-            </div>
-            <div class="form-group">
-                <label>Subtítulo do Hero</label>
-                <textarea id="edit-hero-subtitulo" rows="3"></textarea>
-            </div>
-            <button class="btn-primary rose btn-block" onclick="salvarTextos()">Salvar Textos</button>
-        </section>
+      <nav class="nav-links">
+          <a href="index.html">Início</a>
+          <a href="sobre.html">Sobre</a>
+          <a href="comunidade.html">Comunidade</a>
+          <a href="eventos.html">Eventos</a>
+          <a href="contatos.html">Contato</a>
+          <a href="configuracoes.html" style="color: var(--rosa-escuro);">Configurações</a>
+          
+          <div class="nav-buttons-mobile"></div>
+      </nav>
+  </header>
 
-        <hr class="config-divider">
+  <!-- Conteúdo Principal do Painel -->
+  <main>
+    <section class="panel-header">
+      <div class="icon-wrapper">
+        <span class="decor"><i class="fa-solid fa-seedling"></i></span>
+        <i class="fa-solid fa-gear"></i>
+        <span class="decor" style="transform: scaleX(-1);"><i class="fa-solid fa-seedling"></i></span>
+      </div>
+      <h1>Painel Administrativo</h1>
+      <div class="divider">
+        <i class="fa-solid fa-heart"></i>
+      </div>
+      <p>Gerencie o conteúdo do Somos Mulheres em Movimento.</p>
+    </section>
 
-        <section class="config-section">
-            <h3>2. Capa do Livro em Destaque</h3>
-            <div class="form-group">
-                <label>Alterar Foto do Livro Atual (Hero)</label>
-                <input type="file" accept="image/*" onchange="previewImagem(this, 'book-preview')">
-                <div class="preview-container">
-                    <img id="book-preview" class="preview-box-large">
-                </div>
-            </div>
-            <button class="btn-primary rose btn-block" onclick="salvarFotoLivro()">Atualizar Capa</button>
-        </section>
+    <!-- Grid de Opções (Cards) -->
+    <div class="grid-container">
+      
+      <!-- Linha Superior (3 Cards) -->
+      <div class="row-top">
+        <div class="card">
+          <div class="card-icon-container">
+            <i class="fa-regular fa-file-lines"></i>
+          </div>
+          <h3>Textos</h3>
+          <p>Edite os textos do site, como hero, títulos e descrições.</p>
+          <a href="#textos" class="btn-access">
+            Acessar <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </div>
 
-        <hr class="config-divider">
+        <div class="card">
+          <div class="card-icon-container">
+            <i class="fa-solid fa-book"></i>
+          </div>
+          <h3>Biblioteca</h3>
+          <p>Gerencie os livros, edições e capas.</p>
+          <a href="#biblioteca" class="btn-access">
+            Acessar <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </div>
 
-        <section class="config-section">
-            <h3>3. Nossa Biblioteca (Volumes)</h3>
-            <div class="form-group">
-                <label>Título da Edição</label>
-                <input type="text" id="vol-titulo" placeholder="Ex: Mulheres em Movimento Vol. 2">
-            </div>
-            <div class="form-group">
-                <label>Status</label>
-                <select id="vol-status">
-                    <option value="lancado">Lançado</option>
-                    <option value="breve">Em Breve / Inscrições Abertas</option>
-                </select>
-            </div>
-            <button class="btn-primary gold btn-block" onclick="salvarEdicao()">Adicionar à Biblioteca</button>
-        </section>
+        <div class="card">
+          <div class="card-icon-container">
+            <i class="fa-solid fa-users"></i>
+          </div>
+          <h3>Comunidade</h3>
+          <p>Adicione e gerencie as participantes.</p>
+          <a href="#comunidade" class="btn-access">
+            Acessar <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
 
-        <hr class="config-divider">
+      <!-- Linha Inferior (2 Cards) -->
+      <div class="row-bottom">
+        <div class="card">
+          <div class="card-icon-container">
+            <i class="fa-regular fa-calendar-check"></i>
+          </div>
+          <h3>Eventos</h3>
+          <p>Crie, edite e organize eventos da comunidade.</p>
+          <a href="#eventos" class="btn-access">
+            Acessar <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </div>
 
-        <section class="config-section">
-            <h3>4. Adicionar Mulher na Comunidade</h3>
-            <div class="form-group">
-                <label>Nome da Participante</label>
-                <input type="text" id="new-name">
-            </div>
-            <div class="form-group">
-                <label>Função / Edição</label>
-                <input type="text" id="new-role" placeholder="Ex: Coautora Vol. 1">
-            </div>
-            <div class="form-group">
-                <label>Foto de Perfil</label>
-                <input type="file" accept="image/*" onchange="previewImagem(this, 'member-preview')">
-                <img id="member-preview" class="preview-box">
-            </div>
-            <button class="btn-primary gold btn-block" onclick="salvarNovoMembro()">Publicar na Comunidade</button>
-        </section>
+        <div class="card">
+          <div class="card-icon-container">
+            <i class="fa-regular fa-user"></i>
+          </div>
+          <h3>Conta</h3>
+          <p>Gerencie as informações da sua conta.</p>
+          <a href="#conta" class="btn-access">
+            Acessar <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
 
-        <hr class="config-divider">
-
-        <section class="config-section account-box">
-            <h3>5. Segurança da Conta</h3>
-            <div class="form-group">
-                <label>E-mail de Acesso</label>
-                <input type="email" id="acc-email" value="dona@movimento.com">
-            </div>
-            <div class="form-group">
-                <label>Nova Senha</label>
-                <input type="password" id="acc-password" placeholder="••••••••">
-            </div>
-            <button class="btn-primary rose btn-block" onclick="salvarConta()">Atualizar Dados de Acesso</button>
-        </section>
-
-        <hr class="config-divider">
-        <a href="index.html" class="btn-secondary btn-block back-btn">Sair e Voltar para o Site</a>
     </div>
+  </main>
 
-    <script>
-        let tempImg = "";
+  <!-- Rodapé -->
+  <footer>
+    <p>“Juntas transformamos histórias em propósito.”</p>
+    <i class="fa-solid fa-heart heart-icon"></i>
+  </footer>
 
-        window.onload = function() {
-            // Carregar textos salvos
-            document.getElementById('edit-hero-titulo').value = localStorage.getItem('hero-titulo') || "";
-            document.getElementById('edit-hero-subtitulo').value = localStorage.getItem('hero-subtitulo') || "";
-            
-            // Carregar preview da foto do livro se existir
-            const savedBook = localStorage.getItem('capa-livro');
-            if(savedBook) {
-                const img = document.getElementById('book-preview');
-                img.src = savedBook;
-                img.style.display = 'block';
-            }
-        }
-
-        // Função Genérica para Preview
-        function previewImagem(input, idDestino) {
-            if (input.files && input.files[0]) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    tempImg = e.target.result;
-                    const img = document.getElementById(idDestino);
-                    img.src = tempImg;
-                    img.style.display = 'block';
-                }
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-
-        function salvarTextos() {
-            localStorage.setItem('hero-titulo', document.getElementById('edit-hero-titulo').value);
-            localStorage.setItem('hero-subtitulo', document.getElementById('edit-hero-subtitulo').value);
-            alert("Textos salvos!");
-        }
-
-        function salvarFotoLivro() {
-            if(tempImg) {
-                localStorage.setItem('capa-livro', tempImg);
-                alert("Capa do livro atualizada!");
-            }
-        }
-
-        function salvarEdicao() {
-            const edicoes = JSON.parse(localStorage.getItem('edicoes-livros')) || [];
-            edicoes.push({
-                titulo: document.getElementById('vol-titulo').value,
-                status: document.getElementById('vol-status').value
-            });
-            localStorage.setItem('edicoes-livros', JSON.stringify(edicoes));
-            alert("Nova edição adicionada!");
-        }
-
-        function salvarNovoMembro() {
-            const lista = JSON.parse(localStorage.getItem('mulheres-comunidade')) || [];
-            lista.push({
-                nome: document.getElementById('new-name').value,
-                papel: document.getElementById('new-role').value,
-                foto: tempImg || "placeholder.jpg"
-            });
-            localStorage.setItem('mulheres-comunidade', JSON.stringify(lista));
-            alert("Membro adicionado!");
-        }
-
-        function salvarConta() {
-            localStorage.setItem('admin-email', document.getElementById('acc-email').value);
-            const pass = document.getElementById('acc-password').value;
-            if(pass) localStorage.setItem('admin-pass', pass);
-            alert("Dados de conta atualizados!");
-        }
-    </script>
 </body>
 </html>
